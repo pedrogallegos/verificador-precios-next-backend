@@ -1,0 +1,162 @@
+[
+  {
+    "nombre": "Coca Cola 600ml",
+    "precioPublico": 2.50,
+    "precioCompra": 1.80,
+    "descripcion": "Bebida gaseosa sabor cola en botella de 600ml",
+    "codigoBarra": "7501055362011",
+    "cantidad": 150
+  },
+  {
+    "nombre": "Pepsi 600ml",
+    "precioPublico": 2.45,
+    "precioCompra": 1.75,
+    "descripcion": "Bebida gaseosa sabor cola Pepsi en botella de 600ml",
+    "codigoBarra": "7501055330027",
+    "cantidad": 120
+  },
+  {
+    "nombre": "Agua Bonafont 1L",
+    "precioPublico": 1.20,
+    "precioCompra": 0.85,
+    "descripcion": "Agua purificada Bonafont en botella de 1 litro",
+    "codigoBarra": "7501055301234",
+    "cantidad": 200
+  },
+  {
+    "nombre": "Doritos Nacho 62g",
+    "precioPublico": 1.80,
+    "precioCompra": 1.30,
+    "descripcion": "Botana de maíz sabor nacho cheese de 62 gramos",
+    "codigoBarra": "7501055325678",
+    "cantidad": 80
+  },
+  {
+    "nombre": "Sabritas Clásicas 45g",
+    "precioPublico": 1.50,
+    "precioCompra": 1.10,
+    "descripcion": "Papas fritas saladas clásicas de 45 gramos",
+    "codigoBarra": "7501055312345",
+    "cantidad": 95
+  },
+  {
+    "nombre": "Chocolate Carlos V",
+    "precioPublico": 0.75,
+    "precioCompra": 0.55,
+    "descripcion": "Chocolate con leche Carlos V de 20 gramos",
+    "codigoBarra": "7501055387654",
+    "cantidad": 300
+  },
+  {
+    "nombre": "Galletas Oreo 154g",
+    "precioPublico": 3.20,
+    "precioCompra": 2.30,
+    "descripcion": "Galletas de chocolate rellenas de crema Oreo",
+    "codigoBarra": "7501055398765",
+    "cantidad": 60
+  },
+  {
+    "nombre": "Leche Lala 1L",
+    "precioPublico": 2.80,
+    "precioCompra": 2.00,
+    "descripcion": "Leche entera pasteurizada Lala de 1 litro",
+    "codigoBarra": "7501055409876",
+    "cantidad": 75
+  },
+  {
+    "nombre": "Pan Bimbo Blanco",
+    "precioPublico": 1.95,
+    "precioCompra": 1.40,
+    "descripcion": "Pan de caja blanco Bimbo grande",
+    "codigoBarra": "7501055420987",
+    "cantidad": 40
+  },
+  {
+    "nombre": "Cerveza Corona 355ml",
+    "precioPublico": 2.20,
+    "precioCompra": 1.60,
+    "descripcion": "Cerveza clara Corona en lata de 355ml",
+    "codigoBarra": "7501055431098",
+    "cantidad": 180
+  },
+  {
+    "nombre": "Yogurt Danone Fresa",
+    "precioPublico": 1.60,
+    "precioCompra": 1.15,
+    "descripcion": "Yogurt natural sabor fresa Danone de 150g",
+    "codigoBarra": "7501055442109",
+    "cantidad": 90
+  },
+  {
+    "nombre": "Jabón Zote Rosa 200g",
+    "precioPublico": 0.85,
+    "precioCompra": 0.60,
+    "descripcion": "Jabón para lavar ropa Zote rosa de 200 gramos",
+    "codigoBarra": "7501055453210",
+    "cantidad": 120
+  },
+  {
+    "nombre": "Shampoo Head & Shoulders",
+    "precioPublico": 4.50,
+    "precioCompra": 3.20,
+    "descripcion": "Shampoo anticaspa Head & Shoulders 400ml",
+    "codigoBarra": "7501055464321",
+    "cantidad": 35
+  },
+  {
+    "nombre": "Pasta Dental Colgate",
+    "precioPublico": 2.30,
+    "precioCompra": 1.65,
+    "descripcion": "Pasta dental Colgate Total 12 de 75ml",
+    "codigoBarra": "7501055475432",
+    "cantidad": 70
+  },
+  {
+    "nombre": "Arroz Verde Valle 1kg",
+    "precioPublico": 3.80,
+    "precioCompra": 2.70,
+    "descripcion": "Arroz blanco grano largo Verde Valle de 1 kilogramo",
+    "codigoBarra": "7501055486543",
+    "cantidad": 50
+  },
+  {
+    "nombre": "Frijoles La Costeña 560g",
+    "precioPublico": 2.10,
+    "precioCompra": 1.50,
+    "descripcion": "Frijoles negros refritos La Costeña lata de 560g",
+    "codigoBarra": "7501055497654",
+    "cantidad": 85
+  },
+  {
+    "nombre": "Aceite Capullo 1L",
+    "precioPublico": 4.20,
+    "precioCompra": 3.00,
+    "descripcion": "Aceite vegetal comestible Capullo de 1 litro",
+    "codigoBarra": "7501055508765",
+    "cantidad": 45
+  },
+  {
+    "nombre": "Huevos San Juan 12 pzas",
+    "precioPublico": 2.95,
+    "precioCompra": 2.10,
+    "descripcion": "Huevos frescos San Juan carton de 12 piezas",
+    "codigoBarra": "7501055519876",
+    "cantidad": 60
+  },
+  {
+    "nombre": "Papel Higiénico Suave 4 rollos",
+    "precioPublico": 3.50,
+    "precioCompra": 2.50,
+    "descripcion": "Papel higiénico Suave doble hoja paquete de 4 rollos",
+    "codigoBarra": "7501055530987",
+    "cantidad": 70
+  },
+  {
+    "nombre": "Detergente Ariel 1kg",
+    "precioPublico": 5.80,
+    "precioCompra": 4.15,
+    "descripcion": "Detergente en polvo Ariel para ropa de 1 kilogramo",
+    "codigoBarra": "7501055541098",
+    "cantidad": 25
+  }
+]
