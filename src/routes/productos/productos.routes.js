@@ -7,46 +7,52 @@ const router = express.Router()
 // Aplicar middleware de verificación de DB a todas las rutas
 router.use(checkDbConnection)
 
-// Post /productos
-router.post('/', async (request, response, next) => {
-    try {
-    const body = request.body
-    const productos = await crearProducto(body)
-    response.status(201).json( {
-        success: true,
-        message: 'Producto creado exitosamente',
-        data: productos
-    }
-    )
-    } catch (error) {
-      next(error)
-    }
-})
-
+// GET /productos - Obtener todos los productos (debe ir ANTES que las rutas con parámetros)
 router.get('/', async (request, response, next) => {
     try {
-    const productos = await obtenerProductos()
-    response.status(200).json({
-        success: true,
-        message: 'Productos obtenidos exitosamente',
-        data: productos
-    })
+        console.log('Ejecutando obtenerProductos()...')
+        const productos = await obtenerProductos()
+        console.log(`Se encontraron ${productos.length} productos`)
+        response.status(200).json({
+            success: true,
+            message: 'Productos obtenidos exitosamente',
+            data: productos
+        })
     } catch (error) {
-      next(error)
+        console.error('Error en GET /productos:', error.message)
+        next(error)
     }
 })
 
+// POST /productos - Crear nuevo producto
+router.post('/', async (request, response, next) => {
+    try {
+        const body = request.body
+        const productos = await crearProducto(body)
+        response.status(201).json({
+            success: true,
+            message: 'Producto creado exitosamente',
+            data: productos
+        })
+    } catch (error) {
+        next(error)
+    }
+})
+
+// GET /productos/:identifier - Buscar producto específico (debe ir DESPUÉS de las rutas estáticas)
 router.get('/:identifier', async (request, response, next) => {
     try {
-    const { identifier } = request.params
-    const productos = await obtenerProductosByIdOrCodigoBarrasOrNombre(identifier)
-    response.status(200).json({
-        success: true,
-        message: 'Producto obtenido exitosamente',
-        data: productos
-    })
+        const { identifier } = request.params
+        console.log(`Buscando producto con identificador: ${identifier}`)
+        const productos = await obtenerProductosByIdOrCodigoBarrasOrNombre(identifier)
+        response.status(200).json({
+            success: true,
+            message: 'Producto obtenido exitosamente',
+            data: productos
+        })
     } catch (error) {
-      next(error)
+        console.error(`Error buscando producto ${identifier}:`, error.message)
+        next(error)
     }
 })
 
