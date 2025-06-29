@@ -9,7 +9,8 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "poblar": "node poblar-bd.js",
-    "ejemplos": "node ejemplos-api.js"
+    "ejemplos": "node ejemplos-api.js",
+    "verificar-env": "node verificar-env.js"
   },
   "keywords": [],
   "author": "Pedro Gallegos Garcilazo",

@@ -5,10 +5,14 @@ async function start(){
     // Conectar a la base de datos
     try {
         await db.connect()
-        console.log('✅ Conexión a la base de datos exitosa')        // Iniciar el servidor
+        console.log('✅ Conexión a la base de datos exitosa')
+        
+        // Iniciar el servidor
         const PORT = parseInt(process.env.PORT) || 4000
-        await new Promise((resolve) => httpServer.listen(PORT, resolve))
-        console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`)
+        const HOST = process.env.HOST || '0.0.0.0'
+        
+        await new Promise((resolve) => httpServer.listen(PORT, HOST, resolve))
+        console.log(`🚀 Servidor corriendo en http://${HOST}:${PORT}`)
         return { server: httpServer, port: PORT }
     }
     catch (error) {
