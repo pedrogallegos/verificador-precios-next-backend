@@ -35,6 +35,10 @@ const productoSchema = new Schema({
             'Debes ingresar una cantidad para el producto'
         ],
         min: [1, 'La cantidad debe ser mayor a 0']
+    },
+    imagen: {
+        type: String,
+        required: false // Campo opcional para la URL de la imagen
     }
 },
 {
