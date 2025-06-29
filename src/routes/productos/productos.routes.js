@@ -112,6 +112,41 @@ router.get('/productos', async (request, response, next) => {
     }
 })
 
+// PATCH /productos/:identifier - Ruta de compatibilidad para actualizar producto
+router.patch('/productos/:identifier', async (request, response, next) => {
+    try {
+        const { identifier } = request.params
+        const body = request.body
+        console.log(`Actualizando producto ${identifier} (ruta compatibilidad)`)
+        const producto = await actualizarProducto(identifier, body)
+        response.status(200).json({
+            success: true,
+            message: 'Producto actualizado exitosamente (compatibilidad)',
+            data: producto
+        })
+    } catch (error) {
+        console.error('Error actualizando producto (compatibilidad):', error.message)
+        next(error)
+    }
+})
+
+// DELETE /productos/:identifier - Ruta de compatibilidad para eliminar producto
+router.delete('/productos/:identifier', async (request, response, next) => {
+    try {
+        const { identifier } = request.params
+        console.log(`Eliminando producto ${identifier} (ruta compatibilidad)`)
+        const producto = await eliminarProducto(identifier)
+        response.status(200).json({
+            success: true,
+            message: 'Producto eliminado exitosamente (compatibilidad)',
+            data: producto
+        })
+    } catch (error) {
+        console.error('Error eliminando producto (compatibilidad):', error.message)
+        next(error)
+    }
+})
+
 // GET /productos/:identifier - Buscar producto específico (debe ir AL FINAL después de todas las rutas específicas)
 router.get('/:identifier', async (request, response, next) => {
     try {
