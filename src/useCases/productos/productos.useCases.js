@@ -116,6 +116,29 @@ async function buscarProductosPorNombre(searchTerm) {
     return productos
 }
 
+/**
+ * BUSCAR PRODUCTOS POR CÓDIGO DE BARRAS
+ * 
+ * Busca productos que contengan el código de barras proporcionado.
+ * Útil para buscar productos escaneando códigos de barras.
+ * 
+ * @param {string} codigoBarra - Código de barras o parte del código a buscar
+ * @returns {Promise<Array>} Array con productos que coincidan con el código de barras
+ * @throws {Error} Si no se proporciona un código de barras
+ */
+async function buscarProductosPorCodigoBarra(codigoBarra) {
+    if (!codigoBarra || codigoBarra.trim() === '') {
+        throw new Error('Código de barras requerido')
+    }
+    
+    // Búsqueda exacta por código de barras
+    const productos = await Producto.find({
+        codigoBarra: { $regex: codigoBarra.trim(), $options: 'i' }
+    })
+    
+    return productos
+}
+
 // Actualizar un producto por ID
 
 async function actualizarProducto (identifier, productoData) {
@@ -163,6 +186,7 @@ export {
     obtenerProductos,
     obtenerProductosByIdOrCodigoBarrasOrNombre,
     buscarProductosPorNombre,
+    buscarProductosPorCodigoBarra,
     actualizarProducto,
     eliminarProducto
 }

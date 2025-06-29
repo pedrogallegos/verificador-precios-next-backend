@@ -1,5 +1,5 @@
 import express from 'express'
-import { crearProducto, obtenerProductos, obtenerProductosByIdOrCodigoBarrasOrNombre, buscarProductosPorNombre, actualizarProducto, eliminarProducto } from '../../useCases/productos/productos.useCases.js'
+import { crearProducto, obtenerProductos, obtenerProductosByIdOrCodigoBarrasOrNombre, buscarProductosPorNombre, buscarProductosPorCodigoBarra, actualizarProducto, eliminarProducto } from '../../useCases/productos/productos.useCases.js'
 import { checkDbConnection } from '../../middlewares/dbCheck.js'
 
 const router = express.Router()
@@ -91,6 +91,62 @@ router.get('/productos/search', async (request, response, next) => {
         })
     } catch (error) {
         console.error('Error en búsqueda de productos (compatibilidad):', error.message)
+        next(error)
+    }
+})
+
+// GET /search-barcode - Buscar productos por código de barras (DEBE IR ANTES DE /:identifier)
+router.get('/search-barcode', async (request, response, next) => {
+    try {
+        const { q } = request.query
+        console.log(`Buscando productos por código de barras: "${q}"`)
+        
+        if (!q) {
+            return response.status(400).json({
+                success: false,
+                message: 'Parámetro de búsqueda "q" (código de barras) requerido',
+                data: []
+            })
+        }
+        
+        const productos = await buscarProductosPorCodigoBarra(q)
+        console.log(`Se encontraron ${productos.length} productos con código de barras "${q}"`)
+        
+        response.status(200).json({
+            success: true,
+            message: `Se encontraron ${productos.length} productos por código de barras`,
+            data: productos
+        })
+    } catch (error) {
+        console.error('Error en búsqueda por código de barras:', error.message)
+        next(error)
+    }
+})
+
+// GET /productos/search-barcode - Buscar productos por código de barras (compatibilidad para frontend)
+router.get('/productos/search-barcode', async (request, response, next) => {
+    try {
+        const { q } = request.query
+        console.log(`Buscando productos por código de barras: "${q}" (compatibilidad)`)
+        
+        if (!q) {
+            return response.status(400).json({
+                success: false,
+                message: 'Parámetro de búsqueda "q" (código de barras) requerido',
+                data: []
+            })
+        }
+        
+        const productos = await buscarProductosPorCodigoBarra(q)
+        console.log(`Se encontraron ${productos.length} productos con código de barras "${q}"`)
+        
+        response.status(200).json({
+            success: true,
+            message: `Se encontraron ${productos.length} productos por código de barras (compatibilidad)`,
+            data: productos
+        })
+    } catch (error) {
+        console.error('Error en búsqueda por código de barras (compatibilidad):', error.message)
         next(error)
     }
 })
