@@ -12,10 +12,12 @@ const server = http.createServer(app) // Create HTTP server using the Express ap
 // Rutas
 app.use('/api/productos', productoRoutes)
 app.get('/', (req, res) => {
-    res.json({
-        api: 'Api de ejemplo',
+    res.status(200).json({
+        api: 'Verificador de Precios API',
         version: '1.0.0',
-        usergit: 'pedrogallegos'
+        status: 'running',
+        author: 'pedrogallegos',
+        timestamp: new Date().toISOString()
     })
 })
 

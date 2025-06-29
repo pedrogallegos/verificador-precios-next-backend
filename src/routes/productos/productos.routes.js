@@ -1,4 +1,11 @@
 import express from 'express'
+import { crearProducto, obtenerProductos, obtenerProductosByIdOrCodigoBarrasOrNombre, actualizarProducto, eliminarProducto } from '../../useCases/productos/productos.useCases.js'
+import { checkDbConnection } from '../../middlewares/dbCheck.js'
+
+const router = express.Router()
+
+// Aplicar middleware de verificación de DB a todas las rutas
+router.use(checkDbConnection)rt express from 'express'
 import { crearProducto, obtenerProductos, obtenerProductosByIdOrCodigoBarrasOrNombre, buscarProductosPorNombre, actualizarProducto, eliminarProducto } from '../../useCases/productos/productos.useCases.js'
 
 const router = express.Router()

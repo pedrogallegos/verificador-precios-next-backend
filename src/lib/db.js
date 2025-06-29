@@ -17,6 +17,9 @@ class DatabaseConnection {
 
             this.connection = await mongoose.connect(config.MONGODB_URI, options)
             
+            // Marcar como conectado globalmente
+            global.dbConnected = true
+            
             // Eventos de conexión
             mongoose.connection.on('connected', () => {
                 console.log('🟢 Mongoose conectado a MongoDB')
@@ -28,6 +31,7 @@ class DatabaseConnection {
 
             mongoose.connection.on('disconnected', () => {
                 console.log('🟡 Mongoose desconectado de MongoDB')
+                global.dbConnected = false
             })
 
             // Manejar cierre graceful
@@ -39,6 +43,7 @@ class DatabaseConnection {
             return this.connection
         } catch (error) {
             console.error('❌ Error conectando a MongoDB:', error)
+            global.dbConnected = false
             throw error
         }
     }
