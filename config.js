@@ -5,7 +5,8 @@ dotenv.config({ path: '.env' })
 
 export const config = {
   PORT: process.env.PORT || 4000,
-  MONGODB_URI: `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority`,
+  // Railway usará las variables de entorno individuales
+  MONGODB_URI: process.env.MONGODB_URI || `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority`,
   JWT_SECRET: process.env.JWT_SECRET,
   JWT_EXPIRATION_TIME: process.env.JWT_EXPIRATION_TIME,
   JWT_ALGORITHM: process.env.JWT_ALGORITHM,
