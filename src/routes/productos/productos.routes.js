@@ -168,6 +168,23 @@ router.get('/productos', async (request, response, next) => {
     }
 })
 
+// POST /productos - Crear producto (compatibilidad para frontend que usa URL incorrecta)
+router.post('/productos', async (request, response, next) => {
+    try {
+        console.log('Creando producto desde ruta de compatibilidad /productos...')
+        const body = request.body
+        const productos = await crearProducto(body)
+        response.status(201).json({
+            success: true,
+            message: 'Producto creado exitosamente (compatibilidad)',
+            data: productos
+        })
+    } catch (error) {
+        console.error('Error en POST /productos (compatibilidad):', error.message)
+        next(error)
+    }
+})
+
 // PATCH /productos/:identifier - Ruta de compatibilidad para actualizar producto
 router.patch('/productos/:identifier', async (request, response, next) => {
     try {
