@@ -39,6 +39,23 @@ router.post('/', async (request, response, next) => {
     }
 })
 
+// GET /productos/productos - Ruta de compatibilidad para frontend que usa URL incorrecta
+router.get('/productos', async (request, response, next) => {
+    try {
+        console.log('Ejecutando obtenerProductos() desde ruta de compatibilidad /productos...')
+        const productos = await obtenerProductos()
+        console.log(`Se encontraron ${productos.length} productos (ruta compatibilidad)`)
+        response.status(200).json({
+            success: true,
+            message: 'Productos obtenidos exitosamente (compatibilidad)',
+            data: productos
+        })
+    } catch (error) {
+        console.error('Error en GET /productos (compatibilidad):', error.message)
+        next(error)
+    }
+})
+
 // GET /productos/:identifier - Buscar producto específico (debe ir DESPUÉS de las rutas estáticas)
 router.get('/:identifier', async (request, response, next) => {
     try {
