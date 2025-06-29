@@ -1,5 +1,5 @@
 import express from 'express'
-import { crearProducto, obtenerProductos, obtenerProductosByIdOrCodigoBarrasOrNombre, buscarProductosPorNombre, buscarProductosPorCodigoBarra, actualizarProducto, eliminarProducto } from '../../useCases/productos/productos.useCases.js'
+import { crearProducto, obtenerProductos, obtenerProductosByIdOrCodigoBarrasOrNombre, buscarProductosPorNombre, buscarProductosPorCodigoBarra, buscarProductosInteligente, actualizarProducto, eliminarProducto } from '../../useCases/productos/productos.useCases.js'
 import { checkDbConnection } from '../../middlewares/dbCheck.js'
 
 const router = express.Router()
@@ -39,11 +39,11 @@ router.post('/', async (request, response, next) => {
     }
 })
 
-// GET /search - Buscar productos por nombre (DEBE IR ANTES DE /:identifier)
+// GET /search - Búsqueda inteligente (nombre o código de barras) - DEBE IR ANTES DE /:identifier
 router.get('/search', async (request, response, next) => {
     try {
         const { q } = request.query
-        console.log(`Buscando productos con término: "${q}"`)
+        console.log(`Búsqueda inteligente con término: "${q}"`)
         
         if (!q) {
             return response.status(400).json({
@@ -53,8 +53,8 @@ router.get('/search', async (request, response, next) => {
             })
         }
         
-        const productos = await buscarProductosPorNombre(q)
-        console.log(`Se encontraron ${productos.length} productos con término "${q}"`)
+        const productos = await buscarProductosInteligente(q)
+        console.log(`Se encontraron ${productos.length} productos con término "${q}" (búsqueda inteligente)`)
         
         response.status(200).json({
             success: true,
@@ -62,16 +62,16 @@ router.get('/search', async (request, response, next) => {
             data: productos
         })
     } catch (error) {
-        console.error('Error en búsqueda de productos:', error.message)
+        console.error('Error en búsqueda inteligente de productos:', error.message)
         next(error)
     }
 })
 
-// GET /productos/search - Buscar productos por nombre (compatibilidad para frontend)
+// GET /productos/search - Búsqueda inteligente (compatibilidad para frontend)
 router.get('/productos/search', async (request, response, next) => {
     try {
         const { q } = request.query
-        console.log(`Buscando productos con término: "${q}" (compatibilidad)`)
+        console.log(`Búsqueda inteligente con término: "${q}" (compatibilidad)`)
         
         if (!q) {
             return response.status(400).json({
@@ -81,8 +81,8 @@ router.get('/productos/search', async (request, response, next) => {
             })
         }
         
-        const productos = await buscarProductosPorNombre(q)
-        console.log(`Se encontraron ${productos.length} productos con término "${q}"`)
+        const productos = await buscarProductosInteligente(q)
+        console.log(`Se encontraron ${productos.length} productos con término "${q}" (búsqueda inteligente - compatibilidad)`)
         
         response.status(200).json({
             success: true,
@@ -90,7 +90,7 @@ router.get('/productos/search', async (request, response, next) => {
             data: productos
         })
     } catch (error) {
-        console.error('Error en búsqueda de productos (compatibilidad):', error.message)
+        console.error('Error en búsqueda inteligente de productos (compatibilidad):', error.message)
         next(error)
     }
 })

@@ -139,6 +139,55 @@ async function buscarProductosPorCodigoBarra(codigoBarra) {
     return productos
 }
 
+/**
+ * BÚSQUEDA INTELIGENTE DE PRODUCTOS
+ * 
+ * Función que combina búsqueda por nombre y código de barras.
+ * Detecta automáticamente si el término de búsqueda es un código de barras
+ * (solo números) o un nombre (contiene letras).
+ * 
+ * @param {string} searchTerm - Término de búsqueda (nombre o código de barras)
+ * @returns {Promise<Array>} Array con productos encontrados
+ * @throws {Error} Si no se proporciona un término de búsqueda
+ */
+async function buscarProductosInteligente(searchTerm) {
+    if (!searchTerm || searchTerm.trim() === '') {
+        throw new Error('Término de búsqueda requerido')
+    }
+    
+    const termino = searchTerm.trim()
+    
+    // Detectar si es un código de barras (solo números) o nombre (contiene letras)
+    const esCodigoBarra = /^\d+$/.test(termino)
+    
+    let resultados = []
+    
+    if (esCodigoBarra) {
+        // Si es solo números, buscar por código de barras
+        console.log(`Búsqueda por código de barras detectada: "${termino}"`)
+        resultados = await buscarProductosPorCodigoBarra(termino)
+        
+        // Si no encuentra por código de barras, también buscar por nombre (por si acaso)
+        if (resultados.length === 0) {
+            console.log(`No se encontró por código de barras, buscando por nombre: "${termino}"`)
+            resultados = await buscarProductosPorNombre(termino)
+        }
+    } else {
+        // Si contiene letras, buscar por nombre
+        console.log(`Búsqueda por nombre detectada: "${termino}"`)
+        resultados = await buscarProductosPorNombre(termino)
+        
+        // Si no encuentra por nombre y el término podría ser un código parcial, buscar por código
+        if (resultados.length === 0 && /\d/.test(termino)) {
+            console.log(`No se encontró por nombre, buscando por código de barras: "${termino}"`)
+            const resultadosCodigo = await buscarProductosPorCodigoBarra(termino)
+            resultados = resultados.concat(resultadosCodigo)
+        }
+    }
+    
+    return resultados
+}
+
 // Actualizar un producto por ID
 
 async function actualizarProducto (identifier, productoData) {
@@ -187,6 +236,7 @@ export {
     obtenerProductosByIdOrCodigoBarrasOrNombre,
     buscarProductosPorNombre,
     buscarProductosPorCodigoBarra,
+    buscarProductosInteligente,
     actualizarProducto,
     eliminarProducto
 }
