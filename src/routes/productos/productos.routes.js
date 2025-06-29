@@ -1,5 +1,5 @@
 import express from 'express'
-import { crearProducto, obtenerProductos, obtenerProductosByIdOrCodigoBarrasOrNombre, actualizarProducto, eliminarProducto } from '../../useCases/productos/productos.useCases.js'
+import { crearProducto, obtenerProductos, obtenerProductosByIdOrCodigoBarrasOrNombre, buscarProductosPorNombre, actualizarProducto, eliminarProducto } from '../../useCases/productos/productos.useCases.js'
 import { checkDbConnection } from '../../middlewares/dbCheck.js'
 
 const router = express.Router()
@@ -39,7 +39,63 @@ router.post('/', async (request, response, next) => {
     }
 })
 
-// GET /productos/productos - Ruta de compatibilidad para frontend que usa URL incorrecta
+// GET /search - Buscar productos por nombre (DEBE IR ANTES DE /:identifier)
+router.get('/search', async (request, response, next) => {
+    try {
+        const { q } = request.query
+        console.log(`Buscando productos con término: "${q}"`)
+        
+        if (!q) {
+            return response.status(400).json({
+                success: false,
+                message: 'Parámetro de búsqueda "q" requerido',
+                data: []
+            })
+        }
+        
+        const productos = await buscarProductosPorNombre(q)
+        console.log(`Se encontraron ${productos.length} productos con término "${q}"`)
+        
+        response.status(200).json({
+            success: true,
+            message: `Se encontraron ${productos.length} productos`,
+            data: productos
+        })
+    } catch (error) {
+        console.error('Error en búsqueda de productos:', error.message)
+        next(error)
+    }
+})
+
+// GET /productos/search - Buscar productos por nombre (compatibilidad para frontend)
+router.get('/productos/search', async (request, response, next) => {
+    try {
+        const { q } = request.query
+        console.log(`Buscando productos con término: "${q}" (compatibilidad)`)
+        
+        if (!q) {
+            return response.status(400).json({
+                success: false,
+                message: 'Parámetro de búsqueda "q" requerido',
+                data: []
+            })
+        }
+        
+        const productos = await buscarProductosPorNombre(q)
+        console.log(`Se encontraron ${productos.length} productos con término "${q}"`)
+        
+        response.status(200).json({
+            success: true,
+            message: `Se encontraron ${productos.length} productos (compatibilidad)`,
+            data: productos
+        })
+    } catch (error) {
+        console.error('Error en búsqueda de productos (compatibilidad):', error.message)
+        next(error)
+    }
+})
+
+// GET /productos - Ruta de compatibilidad para frontend que usa URL incorrecta
 router.get('/productos', async (request, response, next) => {
     try {
         console.log('Ejecutando obtenerProductos() desde ruta de compatibilidad /productos...')
@@ -56,7 +112,7 @@ router.get('/productos', async (request, response, next) => {
     }
 })
 
-// GET /productos/:identifier - Buscar producto específico (debe ir DESPUÉS de las rutas estáticas)
+// GET /productos/:identifier - Buscar producto específico (debe ir AL FINAL después de todas las rutas específicas)
 router.get('/:identifier', async (request, response, next) => {
     try {
         const { identifier } = request.params
@@ -68,11 +124,12 @@ router.get('/:identifier', async (request, response, next) => {
             data: productos
         })
     } catch (error) {
-        console.error(`Error buscando producto:`, error.message)
+        console.error('Error buscando producto:', error.message)
         next(error)
     }
 })
 
+// PATCH /productos/:identifier - Actualizar producto
 router.patch('/:identifier', async (request, response, next) => {
     try {
         const { identifier } = request.params
@@ -84,11 +141,12 @@ router.patch('/:identifier', async (request, response, next) => {
             data: producto
         })
     } catch (error) {
-      next(error)
+        next(error)
     }
 })
 
-router.delete('/:identifier', async (request, response, next) =>{
+// DELETE /productos/:identifier - Eliminar producto
+router.delete('/:identifier', async (request, response, next) => {
     try {
         const { identifier } = request.params
         const producto = await eliminarProducto(identifier)
@@ -98,7 +156,7 @@ router.delete('/:identifier', async (request, response, next) =>{
             data: producto
         })
     } catch (error) {
-      next(error)
+        next(error)
     }
 })
 
