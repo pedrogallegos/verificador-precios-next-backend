@@ -17,3 +17,12 @@ export const config = {
   SENDGRID_FROM_NAME: process.env.SENDGRID_FROM_NAME,
   SENDGRID_TEMPLATE_ID_NEW_CLIENT: process.env.SENDGRID_TEMPLATE_ID_NEW_CLIENT
 }
+
+// Debug logging para Railway
+console.log('🔧 Config loaded:')
+console.log('- PORT:', config.PORT)
+console.log('- DB_USER:', process.env.DB_USER ? '✅ Set' : '❌ Missing')
+console.log('- DB_PASSWORD:', process.env.DB_PASSWORD ? '✅ Set' : '❌ Missing')
+console.log('- DB_HOST:', process.env.DB_HOST ? '✅ Set' : '❌ Missing')
+console.log('- DB_NAME:', process.env.DB_NAME ? '✅ Set' : '❌ Missing')
+console.log('- MONGODB_URI:', config.MONGODB_URI ? '✅ Generated' : '❌ Failed')

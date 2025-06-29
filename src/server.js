@@ -11,6 +11,7 @@ const server = http.createServer(app) // Create HTTP server using the Express ap
 
 // Rutas
 app.use('/api/productos', productoRoutes)
+
 app.get('/', (req, res) => {
     res.status(200).json({
         api: 'Verificador de Precios API',
@@ -18,6 +19,15 @@ app.get('/', (req, res) => {
         status: 'running',
         author: 'pedrogallegos',
         timestamp: new Date().toISOString()
+    })
+})
+
+app.get('/health', (req, res) => {
+    res.status(200).json({
+        status: 'healthy',
+        database: global.dbConnected ? 'connected' : 'disconnected',
+        timestamp: new Date().toISOString(),
+        uptime: process.uptime()
     })
 })
 
