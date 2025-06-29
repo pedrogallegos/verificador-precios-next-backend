@@ -51,7 +51,7 @@ router.get('/:identifier', async (request, response, next) => {
             data: productos
         })
     } catch (error) {
-        console.error(`Error buscando producto ${identifier}:`, error.message)
+        console.error(`Error buscando producto:`, error.message)
         next(error)
     }
 })
