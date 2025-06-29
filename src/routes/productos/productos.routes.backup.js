@@ -6,6 +6,23 @@ const router = express.Router()
 
 // Aplicar middleware de verificación de DB a todas las rutas
 router.use(checkDbConnection)
+        const { q } = request.query
+        if (!q) {
+            return response.status(400).json({
+                success: false,
+                message: 'Parámetro de búsqueda "q" requerido'
+            })
+        }
+        const productos = await buscarProductosPorNombre(q)
+        response.status(200).json({
+            success: true,
+            message: `Se encontraron ${productos.length} productos`,
+            data: productos
+        })
+    } catch (error) {
+        next(error)
+    }
+})
 
 // Post /productos
 router.post('/', async (request, response, next) => {
@@ -22,7 +39,6 @@ router.post('/', async (request, response, next) => {
       next(error)
     }
 })
-
 router.get('/', async (request, response, next) => {
     try {
     const productos = await obtenerProductos()
@@ -35,7 +51,6 @@ router.get('/', async (request, response, next) => {
       next(error)
     }
 })
-
 router.get('/:identifier', async (request, response, next) => {
     try {
     const { identifier } = request.params
@@ -49,7 +64,6 @@ router.get('/:identifier', async (request, response, next) => {
       next(error)
     }
 })
-
 router.patch('/:identifier', async (request, response, next) => {
     try {
         const { identifier } = request.params
@@ -64,7 +78,6 @@ router.patch('/:identifier', async (request, response, next) => {
       next(error)
     }
 })
-
 router.delete('/:identifier', async (request, response, next) =>{
     try {
         const { identifier } = request.params
@@ -78,5 +91,4 @@ router.delete('/:identifier', async (request, response, next) =>{
       next(error)
     }
 })
-
 export const productoRoutes = router
